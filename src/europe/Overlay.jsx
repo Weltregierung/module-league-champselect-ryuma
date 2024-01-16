@@ -1,94 +1,103 @@
-import React from 'react'
-import cx from 'classnames'
-import Pick from './Pick'
+import React from "react";
+import cx from "classnames";
+import Pick from "./Pick";
 
-import css from './style/index.less'
-import Ban from './Ban'
+import css from "./style/index.less";
+import Ban from "./Ban";
 
 export default class Overlay extends React.Component {
   state = {
     currentAnimationState: css.TheAbsoluteVoid,
-    openingAnimationPlayed: false
-  }
+    openingAnimationPlayed: false,
+  };
 
   playOpeningAnimation() {
-    this.setState({ openingAnimationPlayed: true })
+    this.setState({ openingAnimationPlayed: true });
     setTimeout(() => {
-      this.setState({ currentAnimationState: css.AnimationHidden })
+      this.setState({ currentAnimationState: css.AnimationHidden });
 
       setTimeout(() => {
         this.setState({
           currentAnimationState:
-            css.AnimationTimer + ' ' + css.AnimationBansPick
-        })
+            css.AnimationTimer + " " + css.AnimationBansPick,
+        });
 
         setTimeout(() => {
           this.setState({
             currentAnimationState:
-              css.AnimationBansPick + ' ' + css.AnimationBansPickOnly
-          })
+              css.AnimationBansPick + " " + css.AnimationBansPickOnly,
+          });
 
           setTimeout(() => {
-            this.setState({ currentAnimationState: css.AnimationPigs })
-          }, 1000)
-        }, 1450)
-      }, 700)
-    }, 500)
+            this.setState({ currentAnimationState: css.AnimationPigs });
+          }, 1000);
+        }, 1450);
+      }, 700);
+    }, 500);
   }
 
   render() {
-    const { state, config } = this.props
+    const { state, config } = this.props;
+    console.log("config", config);
+    console.log("state", state);
 
     if (state.isActive && !this.state.openingAnimationPlayed) {
-      this.playOpeningAnimation()
+      this.playOpeningAnimation();
     }
 
     if (!state.isActive && this.state.openingAnimationPlayed) {
-      this.setState({ openingAnimationPlayed: false })
-      this.setState({ currentAnimationState: css.TheAbsoluteVoid })
+      this.setState({ openingAnimationPlayed: false });
+      this.setState({ currentAnimationState: css.TheAbsoluteVoid });
     }
 
     const renderBans = (teamState) => {
-      const list = teamState.bans.map((ban) => <Ban {...ban} />)
-      list.splice(3, 0, <div className={css.Spacing} />)
-      return <div className={cx(css.BansBox)}>{list}</div>
-    }
+      const list = teamState.bans.map((ban) => <Ban {...ban} />);
+      list.splice(3, 0, <div className={css.Spacing} />);
+      return <div className={cx(css.BansBox)}>{list}</div>;
+    };
 
-    const renderTeam = (teamName, teamConfig, teamState) => (
-      <div className={cx(css.Team, teamName)}>
-        <div className={cx(css.Picks)}>
-          {teamState.picks.map((pick) => (
-            <Pick
-              config={this.props.config}
-              {...pick}
-              showSummoners={state.showSummoners}
-            />
-          ))}
-        </div>
-        <div className={css.BansWrapper}>
-          <div
-            className={cx(css.Bans, {
-              [css.WithScore]: config.frontend.scoreEnabled
-            })}
-          >
-            {teamName === css.TeamBlue && config.frontend.scoreEnabled && (
-              <div className={css.TeamScore}>{teamConfig.score}</div>
-            )}
-            {teamName === css.TeamRed && renderBans(teamState)}
-            {/* <div className={cx(css.TeamName, {[css.WithoutCoaches]: !config.frontend.coachesEnabled})}>
-                            {teamConfig.name}
-                            {config.frontend.coachesEnabled && <div className={css.CoachName}>
-                                Coach: {teamConfig.coach}
-                            </div>}
-        </div> */}
-            {teamName === css.TeamBlue && renderBans(teamState)}
-            {teamName === css.TeamRed && config.frontend.scoreEnabled && (
-              <div className={css.TeamScore}>{teamConfig.score}</div>
-            )}
+    const renderTeam = (teamName, teamConfig, teamState) => {
+      return (
+        <div className={cx(css.Team, teamName)}>
+          <div className={cx(css.Picks)}>
+            {teamState.picks.map((pick) => (
+              <Pick
+                config={this.props.config}
+                {...pick}
+                showSummoners={state.showSummoners}
+              />
+            ))}
+          </div>
+          <div className={css.BansWrapper}>
+            <div
+              className={cx(css.Bans, {
+                [css.WithScore]: config.frontend.scoreEnabled,
+              })}
+            >
+              {teamName === css.TeamBlue && config.frontend.scoreEnabled && (
+                <div className={css.TeamScore}>{teamConfig.score}</div>
+              )}
+              {teamName === css.TeamRed && renderBans(teamState)}
+              <div
+                className={cx(css.TeamName, {
+                  [css.WithoutCoaches]: !config.frontend.coachesEnabled,
+                })}
+              >
+                {teamConfig.name}
+                <div className={css.CoachName}>
+                  {teamConfig.coach?.includes(",") ? "Coaches: " : "Coach: "}
+                  {teamConfig.coach}
+                </div>
+              </div>
+              {teamName === css.TeamBlue && renderBans(teamState)}
+              {teamName === css.TeamRed && config.frontend.scoreEnabled && (
+                <div className={css.TeamScore}>{teamConfig.score}</div>
+              )}
+            </div>
           </div>
         </div>
-      </div>
-    )
+      );
+    };
 
     return (
       <div
@@ -96,7 +105,11 @@ export default class Overlay extends React.Component {
           css.Overlay,
           css.Europe,
           this.state.currentAnimationState
-        )} /* style={{"--color-red": config.frontend.redTeam.color, "--color-blue": config.frontend.blueTeam.color}} */
+        )}
+        style={{
+          "--color-red": config.frontend.redTeam.color,
+          "--color-blue": config.frontend.blueTeam.color,
+        }}
       >
         {Object.keys(state).length === 0 && (
           <div className={cx(css.infoBox)}>
@@ -116,7 +129,7 @@ export default class Overlay extends React.Component {
                   [`${css.Red} ${css.Blue}`]:
                     !state.blueTeam.isActive && !state.redTeam.isActive,
                   [css.Blue]: state.blueTeam.isActive,
-                  [css.Red]: state.redTeam.isActive
+                  [css.Red]: state.redTeam.isActive,
                 })}
               >
                 <div className={cx(css.Background, css.Blue)} />
@@ -125,7 +138,7 @@ export default class Overlay extends React.Component {
                   <div className={cx(css.TimerChars)}>
                     {state.timer
                       .toString()
-                      .split('')
+                      .split("")
                       .map((char) => (
                         <div className={cx(css.TimerChar)}>{char}</div>
                       ))}
@@ -141,6 +154,6 @@ export default class Overlay extends React.Component {
           </div>
         )}
       </div>
-    )
+    );
   }
 }
