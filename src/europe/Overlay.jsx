@@ -38,8 +38,6 @@ export default class Overlay extends React.Component {
 
   render() {
     const { state, config } = this.props;
-    console.log("config", config);
-    console.log("state", state);
 
     if (state.isActive && !this.state.openingAnimationPlayed) {
       this.playOpeningAnimation();
@@ -83,11 +81,11 @@ export default class Overlay extends React.Component {
                   [css.WithoutCoaches]: !config.frontend.coachesEnabled,
                 })}
               >
-                {teamConfig.name}
                 <div className={css.CoachName}>
                   {teamConfig.coach?.includes(",") ? "Coaches: " : "Coach: "}
                   {teamConfig.coach}
                 </div>
+                <div style={{ marginTop: "0px" }}>{teamConfig.name}</div>
               </div>
               {teamName === css.TeamBlue && renderBans(teamState)}
               {teamName === css.TeamRed && config.frontend.scoreEnabled && (

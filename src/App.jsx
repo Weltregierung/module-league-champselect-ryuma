@@ -13,13 +13,13 @@ function App() {
         name: "Team Blue",
         score: 0,
         coach: "",
-        color: "rgb(0,151,196)",
+        color: "#a7ede7",
       },
       redTeam: {
         name: "Team Red",
         score: 0,
         coach: "",
-        color: "rgb(222,40,70)",
+        color: "#793bfe",
       },
       patch: "",
     },
@@ -43,7 +43,6 @@ function App() {
         .style.getPropertyValue("--red-team");
 
       function updateTeams(e) {
-        console.log("UPDATE TEAMS");
         setConfig({
           frontend: {
             ...config.frontend,
@@ -59,24 +58,26 @@ function App() {
             },
           },
         });
-        if (e.teams.blueTeam.color !== "#000000") {
-          document
-            .querySelector(":root")
-            .style.setProperty("--blue-team", e.teams.blueTeam.color);
-        } else {
-          document
-            .querySelector(":root")
-            .style.setProperty("--blue-team", themeBlue);
-        }
-        if (e.teams.redTeam.color !== "#000000") {
-          document
-            .querySelector(":root")
-            .style.setProperty("--red-team", e.teams.redTeam.color);
-        } else {
-          document
-            .querySelector(":root")
-            .style.setProperty("--red-team", themeRed);
-        }
+        document
+          .querySelector(":root")
+          .style.setProperty("--red-team", "#793bfe");
+        document
+          .querySelector(":root")
+          .style.setProperty("--blue-team", "#a7ede7");
+        // if (e.teams.blueTeam.color !== "#000000") {
+        //   document
+        //     .querySelector(":root")
+        //     .style.setProperty("--blue-team", e.teams.blueTeam.color);
+        // } else {
+
+        // }
+        // if (e.teams.redTeam.color !== "#000000") {
+        //   document
+        //     .querySelector(":root")
+        //     .style.setProperty("--red-team", e.teams.redTeam.color);
+        // } else {
+
+        // }
       }
 
       const teams = await window.LPTE.request({

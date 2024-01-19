@@ -7,7 +7,6 @@
 
   .TeamName {
     font-size: 30px;
-    color: white;
     font-family: var(--secondary-font-family);
     margin-top: -15px;
 
@@ -19,24 +18,25 @@
 
   .CoachName {
     font-size: 20px;
-    margin-top: -20px;
+    margin-top: 15px;
   }
 
   .TeamScore {
     font-size: 60px;
-    margin-top: -20px;
-    color: white;
+    margin-top: -5px;
     font-family: var(--secondary-font-family);
     width: var(--box-ban-height);
     text-align: center;
     height: calc(100% + 23px);
   }
 
-  @import './picks';
-  @import './bans';
+  @import "./picks";
+  @import "./bans";
 
   &.TeamBlue {
     right: calc(50% + calc(var(--box-width) / 2));
+    background-color: #a7ede7;
+    color: black;
 
     .TeamScore {
       border-right: 3px solid black;
@@ -86,9 +86,11 @@
 
   &.TeamRed {
     left: calc(50% + calc(var(--box-width) / 2));
+    background-color: #793bfe;
+    color: white;
 
     .TeamScore {
-      border-left: 3px solid black;
+      border-left: 3px solid white;
     }
 
     .Bans {
