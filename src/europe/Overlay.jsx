@@ -85,7 +85,7 @@ export default class Overlay extends React.Component {
                   {teamConfig.coach?.includes(",") ? "Coaches: " : "Coach: "}
                   {teamConfig.coach}
                 </div>
-                <div style={{ marginTop: "0px" }}>{teamConfig.name}</div>
+                <div style={{ marginTop: "-5px" }}>{teamConfig.name}</div>
               </div>
               {teamName === css.TeamBlue && renderBans(teamState)}
               {teamName === css.TeamRed && config.frontend.scoreEnabled && (

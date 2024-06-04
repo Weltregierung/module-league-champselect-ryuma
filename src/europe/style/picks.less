@@ -4,6 +4,8 @@
   display: flex;
   box-sizing: border-box;
   overflow: hidden;
+  font-family: "small" !important;
+  letter-spacing: normal;
 
   .Pick {
     position: relative;
@@ -32,7 +34,8 @@
       color: white;
       background-color: black;
       text-align: center;
-      font-size: calc(0.5 * var(--pick-name-height));
+      font-size: calc(0.4 * var(--pick-name-height));
+      // font-size: 20px;
       line-height: var(--pick-name-height);
     }
 
@@ -49,6 +52,7 @@
     }
 
     .PickImage {
+      background-color: #1d00d6;
       position: relative;
       height: calc(100% - var(--pick-name-height));
 
@@ -61,7 +65,7 @@
       }
 
       &.Active::before {
-        content: '';
+        content: "";
         position: absolute;
         top: 0;
         left: 0;
@@ -92,7 +96,7 @@
       color: black;
     }
     .PlayerName::after {
-      content: '';
+      content: "";
       position: absolute;
       top: 0;
       left: 0;
@@ -119,7 +123,7 @@
       color: black;
     }
     .PlayerName::after {
-      content: '';
+      content: "";
       position: absolute;
       top: 0;
       left: 0;

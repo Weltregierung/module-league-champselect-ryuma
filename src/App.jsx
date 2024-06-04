@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Overlay from "./europe/Overlay";
 import convertState from "./convertState";
+import "./index.css";
 
 function App() {
   const [globalState, setGlobalState] = useState({});
