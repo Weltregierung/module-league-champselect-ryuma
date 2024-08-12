@@ -25,12 +25,16 @@ function App() {
       patch: "",
     },
   });
+
   useEffect(() => {
     window.LPTE.onready(async () => {
-      window.LPTE.on("module-league-state", "champselect-update", (e) => {
+      window.LPTE.on("module-league-state", "champselect-update", async (e) => {
         console.log("e", e);
         e.data.isActive = e.isActive;
         e.data.isActive = true;
+        e.data.blueTeam.picks = await loadNewPicks(e.data.blueTeam.picks);
+        e.data.redTeam.picks = await loadNewPicks(e.data.redTeam.picks);
+
         setGlobalState(e.data);
       });
 
@@ -61,10 +65,10 @@ function App() {
         });
         document
           .querySelector(":root")
-          .style.setProperty("--red-team", "#793bfe");
+          .style.setProperty("--red-team", "#f5f4fd");
         document
           .querySelector(":root")
-          .style.setProperty("--blue-team", "#a7ede7");
+          .style.setProperty("--blue-team", "#f5f4fd");
         // if (e.teams.blueTeam.color !== "#000000") {
         //   document
         //     .querySelector(":root")
@@ -93,6 +97,20 @@ function App() {
       updateTeams(teams);
     });
   }, []);
+
+  const loadNewPicks = async (picks) => {
+    let newPicks = await fetch(`http://127.0.0.1:3009/loadriotidsforpuuids`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        picks,
+      }),
+    }).then((res) => res.json());
+
+    return newPicks;
+  };
 
   return (
     <div className="App">

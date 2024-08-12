@@ -1,7 +1,7 @@
-import React from 'react'
-import cx from 'classnames'
+import React from "react";
+import cx from "classnames";
 
-import css from './style/index.less'
+import css from "./style/index.less";
 
 export default (props) => (
   <div className={cx(css.Pick, { [css.Active]: props.isActive })}>
@@ -17,13 +17,13 @@ export default (props) => (
       )}
     <div
       className={cx(css.PickImage, {
-        [css.Active]: props.isActive
+        [css.Active]: props.isActive,
       })}
     >
       <img src={props.champion.loadingImg} alt="" />
     </div>
     <div className={cx(css.PlayerName)}>
-      <span>{props.displayName}</span>
+      <span>{props.riotId}</span>
     </div>
   </div>
-)
+);
